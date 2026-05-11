@@ -5,7 +5,7 @@ const cors = require('cors');
 
 const app = express();
 app.use(express.json());
-app.use(cors()); // Importante para que Ionic pueda comunicarse con el server
+app.use(cors());
 
 const pool = new Pool({
     user: 'postgres',
@@ -17,27 +17,42 @@ const pool = new Pool({
 
 // Ruta para Registrar
 app.post('/register', async (req, res) => {
-    const { email, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10); // Encriptamos la clave
+    const { username, rut, email, region, comuna, password } = req.body;
+    
     try {
-        await pool.query('INSERT INTO usuarios (email, password) VALUES ($1, $2)', [email, hashedPassword]);
-        res.status(201).send("Usuario creado");
+        const hashedPassword = await bcrypt.hash(password, 10);
+        
+        const query = `
+            INSERT INTO usuarios (username, rut, email, region, comuna, password) 
+            VALUES ($1, $2, $3, $4, $5, $6) 
+            RETURNING *`; 
+
+        const values = [username, rut, email, region, comuna, hashedPassword];
+        const result = await pool.query(query, values);
+        
+        console.log("Usuario registrado con éxito:", result.rows[0].email);
+        res.status(201).json({message: "Usuario creado exitosamente", user: result.rows[0]});
+
     } catch (err) {
-        res.status(500).send("Error al registrar");
+        console.error("Error detectado:", err.code);
+
+        if (err.code === '23505') {
+            return res.status(400).send("El RUT o el Email ya están registrados");
+        } 
+        
+        return res.status(500).send("Error en el servidor al procesar el registro");
     }
 });
 
+// Ruta para Login
 app.post('/login', async(req, res) => {
     const { email, password } = req.body;
     
     try {
-        // se busca el usuario
         const userResult = await pool.query('SELECT * FROM usuarios WHERE email = $1', [email]);
 
         if (userResult.rows.length > 0) {
             const user = userResult.rows[0];
-            
-            //se valida la clave
             const validPassword = await bcrypt.compare(password, user.password);
 
             if (validPassword) {
@@ -45,7 +60,6 @@ app.post('/login', async(req, res) => {
             } else {
                 res.status(401).send("Contraseña incorrecta");
             }
-
         } else {
             res.status(404).send("Usuario no encontrado");
         }
@@ -55,9 +69,8 @@ app.post('/login', async(req, res) => {
     }
 });
 
-
 app.get('/', (req, res) => {
     res.send('🚀 El servidor de mi proyecto está vivo y funcionando');
 });
 
-app.listen(3000, () => console.log("Server corriendo en puerto 3000"));
+app.listen(3000, () => console.log("✅ Servidor escuchando en http://localhost:3000"));

@@ -1,14 +1,5 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-<<<<<<< HEAD
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import Home from './pages/Home';
-
-/* IMPORTANTE: No olvides los CSS de arriba */
-=======
 import { 
   IonApp, IonRouterOutlet, setupIonicReact, 
   IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonIcon, IonLabel, IonMenuButton 
@@ -23,7 +14,6 @@ import Register from './pages/Register';
 import ReportarAnimal from './pages/ReportarAnimal';
 
 /* CSS básico de Ionic */
->>>>>>> 7c414ee419a90f4cbb9478144ad2b783c75fc19f
 import '@ionic/react/css/core.css';
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
@@ -35,24 +25,6 @@ setupIonicReact();
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
-<<<<<<< HEAD
-      <IonRouterOutlet>
-        <Route exact path="/register">
-          <Register />
-        </Route>
-
-        <Route exact path="/login">
-          <Login />
-        </Route>
-
-        <Route exact path="/home">
-          <Home />
-        </Route>
-
-        <Route exact path="/">
-          <Redirect to="/login" />
-        </Route>
-=======
       {/* MENU LATERAL (Se abre desde la izquierda) */}
       <IonMenu contentId="main-content">
         <IonHeader>
@@ -102,7 +74,6 @@ const App: React.FC = () => (
         </Route>
 
         <Route exact path="/" render={() => <Redirect to="/home" />} />
->>>>>>> 7c414ee419a90f4cbb9478144ad2b783c75fc19f
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

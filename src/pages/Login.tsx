@@ -34,7 +34,7 @@ const Login: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Iniciar Sesión en: "NOMBREDELAPP"</IonTitle>
+                    <IonTitle>Iniciar Sesión en: Huellas Seguras</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent className='ion-padding'>

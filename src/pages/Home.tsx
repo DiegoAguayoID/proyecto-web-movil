@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-import { 
-    IonButton, IonContent, IonHeader, IonInput, 
-    IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonRouterLink
-} from '@ionic/react';
-
-const Home: React.FC = () => {
-    return (
-        <IonPage>
-            <IonHeader>
-                <IonToolbar>
-                    <IonTitle> FUNCIONANDO HOME</IonTitle>
-                </IonToolbar>
-            </IonHeader>
-=======
 import {
     IonContent,
     IonHeader,
@@ -613,7 +598,6 @@ const Home: React.FC = () => {
 
             </IonContent>
 
->>>>>>> 7c414ee419a90f4cbb9478144ad2b783c75fc19f
         </IonPage>
     );
 };

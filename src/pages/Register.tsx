@@ -1,37 +1,11 @@
 import { 
-<<<<<<< HEAD
-    IonButton, IonContent, IonHeader, IonInput, 
-=======
     IonButton, IonContent, IonHeader, IonInput,IonCheckbox, 
->>>>>>> 7c414ee419a90f4cbb9478144ad2b783c75fc19f
-    IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonRouterLink
+    IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonRouterLink, useIonRouter, 
+    IonNote, IonText, UseIonRouterResult
 } from '@ionic/react';
 import React, { useState } from 'react';
 
 const Register: React.FC = () => {
-<<<<<<< HEAD
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
-    const handleRegister = async () => {
-        try {
-            const response = await fetch('http://localhost:3000/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({email, password})
-            });
-
-            if (response.ok) {
-                alert("¡Usuario Guardado en POSTGRESQL!");
-            } else {
-                alert("Algo salio mal en el server");
-            }
-        } catch (error) {
-            console.error("Error de conexion:", error);
-            alert("No se pudo conectar con el server");
-        }
-
-=======
     const [username, setUsername] = useState('');
     const [rut, setRut] = useState('');
     const [email, setEmail] = useState('');
@@ -40,8 +14,35 @@ const Register: React.FC = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [terms, setTerms] = useState(false);
+    const router = useIonRouter();
+
+
+const validarEmail = (correo: string) => {
+    return String(email)
+        .toLowerCase()
+        .match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+};
+
+const validarRut = (rutTexto: string) => {
+    const regexRut = /^[0-9]{7,8}-[0-9kK]{1}$/;
+    return regexRut.test(rutTexto);
+};
 
 const handleRegister = async () => {
+        if (!validarRut(rut)) {
+            alert("El RUT no es válido. Usa el formato: 12345678-9 (sin puntos y con guion)");
+            return;
+        }
+
+        if (!validarEmail(email)) {
+            alert("Por favor, ingresa un correo electrónico válido (ejemplo@correo.com)");
+        }
+        
+        if (password.length < 6) {
+            alert("La contraseña debe tener al menos 6 caracteres");
+            return;
+        }
+
         if (password !== confirmPassword) {
             alert("Las contraseñas no coinciden");
             return;
@@ -52,32 +53,30 @@ const handleRegister = async () => {
         }
 
         try {
-            // Aquí luego irá tu conexión real al backend
-            console.log("Datos a enviar:", { username, rut, email, region, comuna, password });
-            alert("¡Formulario validado! (Simulación de guardado)");
+            const response = await fetch('http://localhost:3000/register', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ username, rut, email, region, comuna, password })
+            });
+
+            if (response.ok) {
+                alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
+                router.push('/login', 'forward', 'replace');
+                return; 
+            }
+
+            const errorText = await response.text();
+            alert("Error del servidor: " + errorText);
         } catch (error) {
-            console.error("Error:", error);
+            console.error("Error de conexión:", error);
+            alert("No se pudo conectar con el servidor");
         }
->>>>>>> 7c414ee419a90f4cbb9478144ad2b783c75fc19f
     };
 
     return (
         <IonPage>
             <IonHeader> 
                 <IonToolbar>
-<<<<<<< HEAD
-                    <IonTitle>Registrarme en: "NOMBREDELAPP"</IonTitle>
-                </IonToolbar>
-            </IonHeader>
-            <IonContent className='ion-padding'>
-                <IonItem>
-                    <IonLabel position='floating'>Correo Electrónico</IonLabel>
-                    <IonInput
-                        type = "email"
-                        value= {email}
-                        onIonInput={(e) => setEmail(e.detail.value!)}
-                    />
-=======
                     <IonTitle>Registro de Ciudadano</IonTitle>
                 </IonToolbar>
             </IonHeader>
@@ -85,17 +84,17 @@ const handleRegister = async () => {
                 
                 <IonItem>
                     <IonLabel position='floating'>Nombre de Usuario</IonLabel>
-                    <IonInput value={username} onIonInput={(e) => setUsername(e.detail.value!)} />
+                    <IonInput value={username}  placeholder="Ej: JuanPerez2024" onIonInput={(e) => setUsername(e.detail.value!)} />
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel position='floating'>RUT</IonLabel>
-                    <IonInput value={rut} onIonInput={(e) => setRut(e.detail.value!)} />
+                    <IonLabel position='floating'>RUT (sin puntos y con guion)</IonLabel>
+                    <IonInput value={rut} placeholder="12345678-9" onIonInput={(e) => setRut(e.detail.value!)} />
                 </IonItem>
 
                 <IonItem>
                     <IonLabel position='floating'>Correo Electrónico</IonLabel>
-                    <IonInput type="email" value={email} onIonInput={(e) => setEmail(e.detail.value!)} />
+                    <IonInput type="email" placeholder="usuario@ejemplo.com" value={email} onIonInput={(e) => setEmail(e.detail.value!)} />
                 </IonItem>
 
                 <IonItem>
@@ -106,23 +105,15 @@ const handleRegister = async () => {
                 <IonItem>
                     <IonLabel position='floating'>Comuna</IonLabel>
                     <IonInput value={comuna} onIonInput={(e) => setComuna(e.detail.value!)} />
->>>>>>> 7c414ee419a90f4cbb9478144ad2b783c75fc19f
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel position='floating'>Contraseña</IonLabel>
-<<<<<<< HEAD
-                    <IonInput
-                        type="password"
-                        value={password}
-                        onIonInput={(e) => setPassword(e.detail.value!)}
-                    />
-=======
+                    <IonLabel position='floating'>Contraseña (mínimo 6 caracteres)</IonLabel>
                     <IonInput type="password" value={password} onIonInput={(e) => setPassword(e.detail.value!)} />
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel position='floating'>Confirmar Contraseña</IonLabel>
+                    <IonLabel position='floating'>Confirmar Contraseña (mínimo 6 caracteres)</IonLabel>
                     <IonInput type="password" value={confirmPassword} onIonInput={(e) => setConfirmPassword(e.detail.value!)} />
                 </IonItem>
 
@@ -131,7 +122,6 @@ const handleRegister = async () => {
                     <IonLabel style={{ fontSize: '0.9em', whiteSpace: 'normal' }}>
                         Acepto los términos y condiciones
                     </IonLabel>
->>>>>>> 7c414ee419a90f4cbb9478144ad2b783c75fc19f
                 </IonItem>
 
                 <IonButton expand='block' className='ion-margin-top' onClick={handleRegister}>
@@ -139,19 +129,11 @@ const handleRegister = async () => {
                 </IonButton>
 
                 <p style={{ textAlign: 'center'}}> 
-<<<<<<< HEAD
-                    ¿Tienes Cuenta en "NOMBNRE APP"? <IonRouterLink href='/login'>Inicia Sesión aquí</IonRouterLink>
-=======
                     ¿Ya tienes cuenta? <IonRouterLink href='/login'>Inicia Sesión aquí</IonRouterLink>
->>>>>>> 7c414ee419a90f4cbb9478144ad2b783c75fc19f
                 </p>
             </IonContent>
         </IonPage>
     );
 };
 
-<<<<<<< HEAD
 export default Register;
-=======
-export default Register;
->>>>>>> 7c414ee419a90f4cbb9478144ad2b783c75fc19f
