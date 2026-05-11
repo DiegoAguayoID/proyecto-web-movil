@@ -9,26 +9,26 @@ A través de una arquitectura Full-Stack, la aplicación conecta a la ciudadaní
 
 El sistema se basa en la interacción de dos roles principales: **Usuario (Ciudadano)** y **Administrador (Gestión Municipal)**. Las funcionalidades clave son:
 
-| ID | Requerimiento | Descripción | Rol | Implementado?
+| ID | Requerimiento | Descripción | Rol | Implementado? |
 | :--- | :--- | :--- | :--- |
-| **RF01** | **Reportar animales** | Registro de animales abandonados incluyendo fotografía descriptiva y ubicación exacta vía GPS. | Usuario |
-| **RF02** | **Sistema de adopción** | Catálogo interactivo para encontrar y postular a la adopción de animales rescatados disponibles. | Usuario |
-| **RF03** | **Mapa interactivo** | Visualización dinámica de zonas críticas con mayor presencia de animales para facilitar la gestión territorial. | Usuario / Admin |
-| **RF04** | **Solicitar rescate** | Canal directo para pedir asistencia a organizaciones de rescate o departamentos municipales especializados. | Usuario |
-| **RF05** | **Seguimiento de casos** | Módulo para revisar en tiempo real el estado y los avances de los reportes realizados por el usuario. | Usuario |
-| **RF06** | **Perfil de usuario** | Centro de gestión personal donde el usuario administra sus reportes activos, historial y solicitudes de adopción. | Usuario |
-| **RF07** | **Solicitud de Esterilización/Chip** | Reserva de turnos para operativos de esterilización o implantación de microchips. | Usuario |
+| **RF01** | **Reportar animales** | Registro de animales abandonados incluyendo fotografía descriptiva y ubicación exacta vía GPS. | Usuario | Sí |
+| **RF02** | **Sistema de adopción** | Catálogo interactivo para encontrar y postular a la adopción de animales rescatados disponibles. | Usuario | No |
+| **RF03** | **Mapa interactivo** | Visualización dinámica de zonas críticas con mayor presencia de animales para facilitar la gestión territorial. | Usuario / Admin | No |
+| **RF04** | **Solicitar rescate** | Canal directo para pedir asistencia a organizaciones de rescate o departamentos municipales especializados. | Usuario | No |
+| **RF05** | **Seguimiento de casos** | Módulo para revisar en tiempo real el estado y los avances de los reportes realizados por el usuario. | Usuario | No |
+| **RF06** | **Perfil de usuario** | Centro de gestión personal donde el usuario administra sus reportes activos, historial y solicitudes de adopción. | Usuario | Sí |
+| **RF07** | **Solicitud de Esterilización/Chip** | Reserva de turnos para operativos de esterilización o implantación de microchips. | Usuario | No |
 
 
 ## 1.1 Requerimientos NO Funcionales
 
 Para asegurar un software robusto, profesional y eficiente, el sistema cumple con los siguientes estándares:
 
-| ID | Requerimiento | Descripción | Rol | Implementado?
+| ID | Requerimiento | Descripción | Rol | Implementado? |
 | :--- | :--- | :--- | :--- |
-| **RNF01** | **Seguridad** | Las contraseñas se almacenan en la base de datos PostgreSQL utilizando el algoritmo de hashing **bcrypt**. | Usuario | Sí 
-| **RNF02** | **Rendimiento** | Consultas optimizadas en PostgreSQL para manejar múltiples reportes georreferenciados simultáneos sin degradar la experiencia de usuario. | Admin | Sí 
-| **RNF03** | **Usabilidad** | Uso de iconografía clara y flujos de navegación de máximo 3 clics para realizar acciones críticas (como reportar un animal). | Usuario | Sí
+| **RNF01** | **Seguridad** | Las contraseñas se almacenan en la base de datos PostgreSQL utilizando el algoritmo de hashing **bcrypt**. | Usuario | Sí |
+| **RNF02** | **Rendimiento** | Consultas optimizadas en PostgreSQL para manejar múltiples reportes georreferenciados simultáneos sin degradar la experiencia de usuario. | Admin | Sí |
+| **RNF03** | **Usabilidad** | Uso de iconografía clara y flujos de navegación de máximo 3 clics para realizar acciones críticas (como reportar un animal). | Usuario | Sí |
 
 
 ## 1.2 Justificación del Problema y Análisis del Usuario Objetivo
