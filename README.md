@@ -1,4 +1,4 @@
-# Huellas Seguras 🐾
+# Huellas Seguras 🐾 by Diego Aguayo, Joaquin Diaz y Javier Viera
 
 **Huellas Seguras** es una plataforma integral diseñada para abordar la problemática de la tenencia irresponsable y la proliferación de animales callejeros en zonas urbanas. 
 A través de una arquitectura Full-Stack, la aplicación conecta a la ciudadanía con la gestión municipal para mejorar el bienestar animal y la salud pública.
