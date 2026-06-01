@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Huellas Seguras 🐾 by Diego Aguayo, Joaquin Diaz y Javier Viera
+=======
+# Huellas Seguras 🐾
+>>>>>>> 5f237961bec7d521a200f30a2b5b08db424e181f
 
 **Huellas Seguras** es una plataforma integral diseñada para abordar la problemática de la tenencia irresponsable y la proliferación de animales callejeros en zonas urbanas. 
 A través de una arquitectura Full-Stack, la aplicación conecta a la ciudadanía con la gestión municipal para mejorar el bienestar animal y la salud pública.
@@ -31,6 +35,12 @@ Para asegurar un software robusto, profesional y eficiente, el sistema cumple co
 | **RNF03** | **Usabilidad** | Uso de iconografía clara y flujos de navegación de máximo 3 clics para realizar acciones críticas (como reportar un animal). | Usuario |
 
 
+<<<<<<< HEAD
+=======
+### MOCKUPS LINK: https://www.figma.com/design/GaEgGUzTRm7K1F9DxsfeYn/Mockup-Plugin-%E2%80%93-Devices-Mockups--Print-Mockups--Branding-Mockups--Comunidad-?node-id=0-1&t=UNSscuerdPEnrDhV-1
+
+
+>>>>>>> 5f237961bec7d521a200f30a2b5b08db424e181f
 ## 1.2 Justificación del Problema y Análisis del Usuario Objetivo
 
 #### Justificación del Problema
@@ -115,3 +125,9 @@ La arquitectura se basa en **Cards Visuales** para maximizar la usabilidad en ex
 1. Entrar a la carpeta raíz.
 2. Ejecutar `npm install`.
 3. Iniciar la aplicación con `ionic serve`.
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 5f237961bec7d521a200f30a2b5b08db424e181f

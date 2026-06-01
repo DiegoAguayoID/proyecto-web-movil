@@ -30,7 +30,12 @@ import {
     businessOutline,
     checkmarkDoneOutline,
     homeOutline,
+<<<<<<< HEAD
     arrowForwardOutline
+=======
+    arrowForwardOutline,
+    arrowDownOutline
+>>>>>>> 5f237961bec7d521a200f30a2b5b08db424e181f
 } from 'ionicons/icons';
 
 import React from 'react';
@@ -470,6 +475,7 @@ const Home: React.FC = () => {
 
                 </div>
 
+<<<<<<< HEAD
                 {/* COMO FUNCIONA */}
                 <IonRow className="ion-align-items-start ion-text-center">
 
@@ -523,6 +529,70 @@ const Home: React.FC = () => {
                             </IonCol>
 
                         </IonRow>
+=======
+               {/* COMO FUNCIONA */}
+                <IonRow className="ion-align-items-start ion-text-center ion-justify-content-center" style={{ padding: '40px 10px' }}>
+
+                    {/* PASO 1 */}
+                    <IonCol size="12" sizeMd="3">
+                        <div style={{
+                            width: '90px', height: '90px', borderRadius: '50%',
+                            background: '#dfe8da', margin: '0 auto 20px auto',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center'
+                        }}>
+                            <IonIcon icon={megaphoneOutline} style={{ fontSize: '42px', color: '#2E7D32' }} />
+                        </div>
+                        <h3 style={{ fontWeight: 'bold' }}>1. Reporta</h3>
+                        <p>Encuentra un animal en situación de abandono y repórtalo en nuestra plataforma.</p>
+                    </IonCol>
+
+                    {/* FLECHA 1 - LÓGICA DE REACT */}
+                    <IonCol size="12" sizeMd="1" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        {/* Usamos window.innerWidth para decidir qué flecha mostrar */}
+                        {window.innerWidth >= 768 ? (
+                            <IonIcon icon={arrowForwardOutline} style={{ fontSize: '35px', color: '#2E7D32', marginTop: '25px' }} />
+                        ) : (
+                            <IonIcon icon={arrowDownOutline} style={{ fontSize: '35px', color: '#2E7D32', margin: '20px 0' }} />
+                        )}
+                    </IonCol>
+
+                    {/* PASO 2 */}
+                    <IonCol size="12" sizeMd="4">
+                        <div style={{
+                            width: '90px', height: '90px', borderRadius: '50%',
+                            background: '#dfe8da', margin: '0 auto 20px auto',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center'
+                        }}>
+                            <IonIcon icon={peopleOutline} style={{ fontSize: '42px', color: '#2E7D32' }} />
+                        </div>
+                        <h3 style={{ fontWeight: 'bold' }}>2. Revisamos</h3>
+                        <p>La comunidad y administradores revisan el caso y coordinan ayuda.</p>
+                    </IonCol>
+
+                    {/* FLECHA 2 - LÓGICA DE REACT */}
+                    <IonCol size="12" sizeMd="1" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        {window.innerWidth >= 768 ? (
+                            <IonIcon icon={arrowForwardOutline} style={{ fontSize: '35px', color: '#2E7D32', marginTop: '25px' }} />
+                        ) : (
+                            <IonIcon icon={arrowDownOutline} style={{ fontSize: '35px', color: '#2E7D32', margin: '20px 0' }} />
+                        )}
+                    </IonCol>
+
+                    {/* PASO 3 */}
+                    <IonCol size="12" sizeMd="3">
+                        <div style={{
+                            width: '90px', height: '90px', borderRadius: '50%',
+                            background: '#dfe8da', margin: '0 auto 20px auto',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center'
+                        }}>
+                            <IonIcon icon={heartOutline} style={{ fontSize: '42px', color: '#2E7D32' }} />
+                        </div>
+                        <h3 style={{ fontWeight: 'bold' }}>3. Rescatamos o adoptamos</h3>
+                        <p>Se coordina el rescate o adopción responsable para darles una mejor vida.</p>
+                    </IonCol>
+
+                </IonRow>
+>>>>>>> 5f237961bec7d521a200f30a2b5b08db424e181f
 
                 {/* FOOTER */}
                 <div
