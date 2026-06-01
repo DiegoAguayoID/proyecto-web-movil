@@ -29,7 +29,7 @@ const Login: React.FC = () => {
             alert("No se pudo conectar con el server");
         }
     };
-
+//hola
     return (
         <IonPage>
             <IonHeader>
