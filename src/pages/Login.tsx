@@ -1,7 +1,8 @@
 import {
     IonButton, IonContent, IonHeader, IonInput,
-    IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonRouterLink,
-    IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonIcon, IonText
+    IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonRouterLink, IonButtons,
+    IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonIcon, IonText,
+    IonMenuButton
 } from '@ionic/react';
 import { mailOutline, lockClosedOutline, logInOutline, personCircleOutline } from 'ionicons/icons';
 import React, { useState } from 'react';
@@ -44,7 +45,10 @@ const Login: React.FC = () => {
         <IonPage>
             <IonHeader className="ion-no-border">
                 <IonToolbar color="success">
-                    <IonTitle style={{ fontWeight: 'bold' }}>Huellas Seguras</IonTitle>
+                    <IonButtons>
+                        <IonMenuButton />
+                    </IonButtons>
+                    <IonTitle style={{ fontWeight: 'bold'}}>Iniciar Sesión</IonTitle>
                 </IonToolbar>
             </IonHeader>
 
