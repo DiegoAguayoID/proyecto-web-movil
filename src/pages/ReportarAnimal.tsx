@@ -1,8 +1,4 @@
 import { 
-<<<<<<< HEAD
-    IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonInput, IonButton 
-} from '@ionic/react';
-=======
     IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, 
     IonLabel, IonInput, IonButton, IonIcon, IonGrid, IonRow, 
     IonCol, IonCard, IonCardContent, IonSelect, IonSelectOption, 
@@ -16,28 +12,11 @@ import {
     sendOutline,
     informationCircleOutline
 } from 'ionicons/icons';
->>>>>>> 5f237961bec7d521a200f30a2b5b08db424e181f
 import React from 'react';
 
 const ReportarAnimal: React.FC = () => {
     return (
         <IonPage>
-<<<<<<< HEAD
-            <IonHeader>
-                <IonToolbar>
-                    <IonTitle>Reportar Animal</IonTitle>
-                </IonToolbar>
-            </IonHeader>
-            <IonContent className="ion-padding">
-                <h2>Ingresar nuevo caso</h2>
-                <IonItem>
-                    <IonLabel position="floating">Descripción del animal</IonLabel>
-                    <IonInput placeholder="Ej: Perro negro mediano..." />
-                </IonItem>
-                <IonButton expand="block" className="ion-margin-top">
-                    Subir Reporte
-                </IonButton>
-=======
             {/* Header con estilo consistente */}
             <IonHeader className="ion-no-border">
                 <IonToolbar color="success">
@@ -153,7 +132,6 @@ const ReportarAnimal: React.FC = () => {
                         </IonCol>
                     </IonRow>
                 </IonGrid>
->>>>>>> 5f237961bec7d521a200f30a2b5b08db424e181f
             </IonContent>
         </IonPage>
     );

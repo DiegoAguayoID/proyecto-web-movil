@@ -1,13 +1,4 @@
 import { 
-<<<<<<< HEAD
-    IonButton, IonContent, IonHeader, IonInput,IonCheckbox, 
-    IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonRouterLink, useIonRouter, 
-    IonNote, IonText, UseIonRouterResult
-} from '@ionic/react';
-import React, { useState } from 'react';
-
-const Register: React.FC = () => {
-=======
     IonButton, IonContent, IonHeader, IonInput, IonCheckbox, 
     IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonRouterLink, useIonRouter, 
     IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonText, IonButtons, IonMenuButton
@@ -20,7 +11,6 @@ import React, { useState } from 'react';
 
 const Register: React.FC = () => {
     // Mantenemos los mismos estados para la base de datos
->>>>>>> 5f237961bec7d521a200f30a2b5b08db424e181f
     const [username, setUsername] = useState('');
     const [rut, setRut] = useState('');
     const [email, setEmail] = useState('');
@@ -31,21 +21,6 @@ const Register: React.FC = () => {
     const [terms, setTerms] = useState(false);
     const router = useIonRouter();
 
-<<<<<<< HEAD
-
-const validarEmail = (correo: string) => {
-    return String(email)
-        .toLowerCase()
-        .match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
-};
-
-const validarRut = (rutTexto: string) => {
-    const regexRut = /^[0-9]{7,8}-[0-9kK]{1}$/;
-    return regexRut.test(rutTexto);
-};
-
-const handleRegister = async () => {
-=======
     const validarEmail = (correo: string) => {
         return String(correo)
             .toLowerCase()
@@ -58,7 +33,6 @@ const handleRegister = async () => {
     };
 
     const handleRegister = async () => {
->>>>>>> 5f237961bec7d521a200f30a2b5b08db424e181f
         if (!validarRut(rut)) {
             alert("El RUT no es válido. Usa el formato: 12345678-9 (sin puntos y con guion)");
             return;
@@ -66,10 +40,7 @@ const handleRegister = async () => {
 
         if (!validarEmail(email)) {
             alert("Por favor, ingresa un correo electrónico válido (ejemplo@correo.com)");
-<<<<<<< HEAD
-=======
             return;
->>>>>>> 5f237961bec7d521a200f30a2b5b08db424e181f
         }
         
         if (password.length < 6) {
@@ -109,64 +80,6 @@ const handleRegister = async () => {
 
     return (
         <IonPage>
-<<<<<<< HEAD
-            <IonHeader> 
-                <IonToolbar>
-                    <IonTitle>Registro de Ciudadano</IonTitle>
-                </IonToolbar>
-            </IonHeader>
-            <IonContent className='ion-padding'>
-                
-                <IonItem>
-                    <IonLabel position='floating'>Nombre de Usuario</IonLabel>
-                    <IonInput value={username}  placeholder="Ej: JuanPerez2024" onIonInput={(e) => setUsername(e.detail.value!)} />
-                </IonItem>
-
-                <IonItem>
-                    <IonLabel position='floating'>RUT (sin puntos y con guion)</IonLabel>
-                    <IonInput value={rut} placeholder="12345678-9" onIonInput={(e) => setRut(e.detail.value!)} />
-                </IonItem>
-
-                <IonItem>
-                    <IonLabel position='floating'>Correo Electrónico</IonLabel>
-                    <IonInput type="email" placeholder="usuario@ejemplo.com" value={email} onIonInput={(e) => setEmail(e.detail.value!)} />
-                </IonItem>
-
-                <IonItem>
-                    <IonLabel position='floating'>Región</IonLabel>
-                    <IonInput value={region} onIonInput={(e) => setRegion(e.detail.value!)} />
-                </IonItem>
-
-                <IonItem>
-                    <IonLabel position='floating'>Comuna</IonLabel>
-                    <IonInput value={comuna} onIonInput={(e) => setComuna(e.detail.value!)} />
-                </IonItem>
-
-                <IonItem>
-                    <IonLabel position='floating'>Contraseña (mínimo 6 caracteres)</IonLabel>
-                    <IonInput type="password" value={password} onIonInput={(e) => setPassword(e.detail.value!)} />
-                </IonItem>
-
-                <IonItem>
-                    <IonLabel position='floating'>Confirmar Contraseña (mínimo 6 caracteres)</IonLabel>
-                    <IonInput type="password" value={confirmPassword} onIonInput={(e) => setConfirmPassword(e.detail.value!)} />
-                </IonItem>
-
-                <IonItem className='ion-margin-top' lines="none">
-                    <IonCheckbox checked={terms} onIonChange={e => setTerms(e.detail.checked)} slot="start" />
-                    <IonLabel style={{ fontSize: '0.9em', whiteSpace: 'normal' }}>
-                        Acepto los términos y condiciones
-                    </IonLabel>
-                </IonItem>
-
-                <IonButton expand='block' className='ion-margin-top' onClick={handleRegister}>
-                    Crear Cuenta
-                </IonButton>
-
-                <p style={{ textAlign: 'center'}}> 
-                    ¿Ya tienes cuenta? <IonRouterLink href='/login'>Inicia Sesión aquí</IonRouterLink>
-                </p>
-=======
             <IonHeader className="ion-no-border"> 
                 <IonToolbar color="success">
                     <IonButtons slot="start">
@@ -277,14 +190,9 @@ const handleRegister = async () => {
                         </IonCol>
                     </IonRow>
                 </IonGrid>
->>>>>>> 5f237961bec7d521a200f30a2b5b08db424e181f
             </IonContent>
         </IonPage>
     );
 };
 
-<<<<<<< HEAD
 export default Register;
-=======
-export default Register;
->>>>>>> 5f237961bec7d521a200f30a2b5b08db424e181f
