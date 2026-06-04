@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# Huellas Seguras 🐾 by Diego Aguayo, Joaquin Diaz y Javier Viera
-=======
 # Huellas Seguras 🐾
->>>>>>> 5f237961bec7d521a200f30a2b5b08db424e181f
 
 **Huellas Seguras** es una plataforma integral diseñada para abordar la problemática de la tenencia irresponsable y la proliferación de animales callejeros en zonas urbanas. 
 A través de una arquitectura Full-Stack, la aplicación conecta a la ciudadanía con la gestión municipal para mejorar el bienestar animal y la salud pública.
@@ -35,12 +31,9 @@ Para asegurar un software robusto, profesional y eficiente, el sistema cumple co
 | **RNF03** | **Usabilidad** | Uso de iconografía clara y flujos de navegación de máximo 3 clics para realizar acciones críticas (como reportar un animal). | Usuario |
 
 
-<<<<<<< HEAD
-=======
 ### MOCKUPS LINK: https://www.figma.com/design/GaEgGUzTRm7K1F9DxsfeYn/Mockup-Plugin-%E2%80%93-Devices-Mockups--Print-Mockups--Branding-Mockups--Comunidad-?node-id=0-1&t=UNSscuerdPEnrDhV-1
 
 
->>>>>>> 5f237961bec7d521a200f30a2b5b08db424e181f
 ## 1.2 Justificación del Problema y Análisis del Usuario Objetivo
 
 #### Justificación del Problema
@@ -100,7 +93,61 @@ La arquitectura se basa en **Cards Visuales** para maximizar la usabilidad en ex
 
 ---
 
-## 2. Stack Tecnológico
+## 2. Implementación de Ingeniería de Software (Backend & Base de Datos)
+
+### 2.1 Configuración y Modelado de la Base de Datos Relacional (EP 2.2)
+Se implementó un diseño de base de datos relacional robusto sobre **PostgreSQL**, aplicando restricciones de clave primaria, restricciones de unicidad (`UNIQUE`) y control estricto de nulos para garantizar la integridad de los datos:
+
+```sql
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    rut VARCHAR(12) NOT NULL UNIQUE,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    region VARCHAR(100) NOT NULL,
+    comuna VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    rol VARCHAR(20) DEFAULT 'usuario',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### 2.2 Desarrollo de la API REST y Seguridad 
+El backend construido sobre **Node.js + Express** expone un contrato CRUD estándar que responde en formato JSON estructurado uniforme. 
+* **Protección contra Inyección SQL:** Todas las interacciones a la base de datos se ejecutan usando **Consultas Preparadas** (parametrizadas mediante marcadores `$1, $2, ...`), neutralizando cualquier vector de ataque por inyección de código SQL malicioso.
+* **Seguridad de Credenciales:** El flujo de `/register` aplica técnicas de Hashing asíncrono con **bcrypt**, garantizando que las claves queden cifradas de manera irreversible en el almacenamiento.
+
+### 2.4 Control de Autenticación por Tokens JWT 
+El endpoint `/login` verifica la firma de la contraseña encriptada y procede a codificar digitalmente un token firmado bajo un secreto del servidor (`jsonwebtoken`), empaquetando el identificador del usuario, su correo y su respectivo nivel de rol (`usuario` o `admin`).
+
+Se incorporó un Middleware centralizado (`verificarToken`) en Express que intercepta los encabezados de las peticiones HTTP (`Authorization: Bearer <TOKEN>`), garantizando el control de accesos a nivel de servidor antes de ejecutar transacciones críticas.
+
+### 2.7 Pruebas Funcionales en Postman y Evidencias
+
+Para certificar el correcto funcionamiento e integración de los componentes, se estructuró un set de pruebas dentro de la plataforma **Postman**. A continuación se detalla el flujo de ejecución paso a paso junto a sus respectivas capturas de pantalla:
+
+### Paso A: Prueba de Registro Exitoso con Validaciones (POST)
+Se envía una petición de tipo **POST** a `http://localhost:3000/register` con un payload JSON estructurado en el cuerpo (`Body -> raw -> JSON`). El servidor procesa el hash bcrypt e inserta con éxito las restricciones devolviendo un código **201 Created**.
+* Si se intenta reenviar el mismo payload, el servidor responde controlando la excepción devolviendo que el RUT o el Email ya se encuentran ocupados.
+
+![Registro exitoso en Postman](./assets/register.png)
+
+### Paso B: Prueba de Inicio de Sesión y Generación de JWT (POST)
+Se realiza una petición **POST** a `http://localhost:3000/login`...
+
+![Login exitoso en Postman](./assets/login.png)
+
+### Paso C: Prueba de Seguridad - Bloqueo de Ruta Protegida (GET Anónimo)
+Se simula el ingreso a una ruta protegida...
+
+![Bloqueo de seguridad 403](./assets/bloqueo.png)
+
+### Paso D: Acceso Validado mediante Interceptores / Tokens Bearer (GET Autenticado)
+Se inyecta el token largo obtenido...
+
+![Ruta desbloqueada con Token](./assets/aprobado.png)
+
+## 3. Stack Tecnológico
 
 * **Frontend:** Ionic Framework con React.
 * **Backend:** Node.js con Express.
@@ -109,7 +156,7 @@ La arquitectura se basa en **Cards Visuales** para maximizar la usabilidad en ex
 
 ---
 
-## 3. Instalación y Configuración
+## 4. Instalación y Configuración
 
 ### Requisitos previos
 * Node.js (v18 o superior)
@@ -125,9 +172,6 @@ La arquitectura se basa en **Cards Visuales** para maximizar la usabilidad en ex
 1. Entrar a la carpeta raíz.
 2. Ejecutar `npm install`.
 3. Iniciar la aplicación con `ionic serve`.
-<<<<<<< HEAD
-=======
 
 
 
->>>>>>> 5f237961bec7d521a200f30a2b5b08db424e181f
