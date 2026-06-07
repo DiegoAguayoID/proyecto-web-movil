@@ -10,12 +10,32 @@ app.use(cors());
 
 const JWT_SECRET = "MiPalabraSecretaSuperSecreta123*";
 
+/*
+
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'miproyectodb',
     password: 'admin123',
     port: 5432,
+});
+
+*/
+
+
+const pool = new Pool({
+    connectionString: "postgresql://huellas_seguras_user:H6M0RUtQCwEskc2Pu8t8ehh8jFujLRDg@dpg-d8idugq8qa3s73ebk09g-a.oregon-postgres.render.com/huellas_seguras",
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
+
+pool.query('SELECT NOW()', (err, res) => {
+    if (err) {
+        console.error('❌ Error conectando a la base de datos de Render:', err);
+    } else {
+        console.log('✅ Conexión exitosa a PostgreSQL en Render');
+    }
 });
 
 // verificar si es un token válido
