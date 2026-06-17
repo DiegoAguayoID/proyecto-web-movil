@@ -1,26 +1,20 @@
 const express = require('express');
+const cors = require('cors');
 const { Pool } = require('pg');
 const bcrypt = require('bcrypt');
-const cors = require('cors');
 const jwt = require('jsonwebtoken');
 
 const app = express();
-app.use(express.json());
-app.use(cors());
+
+app.use(cors({
+    origin: 'http://localhost:8100',
+    credentials: true
+}));
+
+app.use(express.json({ limit: '100mb' }));
+app.use(express.urlencoded({ limit: '100mb', extended: true }));
 
 const JWT_SECRET = "MiPalabraSecretaSuperSecreta123*";
-
-/*
-
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'miproyectodb',
-    password: 'admin123',
-    port: 5432,
-});
-
-*/
 
 
 const pool = new Pool({
@@ -197,5 +191,76 @@ app.delete('/api/users/:id', async (req, res) => {
     } catch (err) {
         console.error(err.message);
         res.status(500).json({status: "error", message: "Error al eliminar usuario"});
+    }
+});
+
+app.post('/reportar', verificarToken, async (req, res) => {
+    const { tipo, estado, descripcion, photoUrl, location } = req.body;
+    
+    // El middleware 'verificarToken' guarda el id del token decodificado en req.usuario
+    const usuario_id = req.usuario.id; 
+
+    // 1. Validaciones en el backend (Seguridad OWASP)
+    if (!tipo || !estado || !descripcion || !photoUrl || !location || !location.lat || !location.lng) {
+        return res.status(400).json({ error: 'Todos los campos son obligatorios, incluyendo la georreferenciación.' });
+    }
+
+    try {
+        // 2. Consulta Parametrizada contra Inyección SQL
+        const query = `
+            INSERT INTO reportes (usuario_id, tipo_animal, estado, descripcion, latitud, longitud, foto_url)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            RETURNING *;
+        `;
+
+        const values = [
+            usuario_id,
+            tipo,
+            estado,
+            descripcion,
+            location.lat,
+            location.lng,
+            photoUrl
+        ];
+
+        const result = await pool.query(query, values);
+
+        // 3. Respuesta exitosa (201 Created)
+        res.status(201).json({
+            message: 'Reporte registrado exitosamente',
+            reporte: result.rows[0]
+        });
+
+    } catch (error) {
+        console.error('❌ Error al guardar el reporte en PostgreSQL:', error);
+        res.status(500).json({ error: 'Error interno del servidor al procesar el reporte' });
+    }
+});
+
+
+app.get('/animales', async (req, res) => {
+    try {
+        const query = `
+            SELECT 
+                r.id,
+                r.tipo_animal,
+                r.estado,
+                r.descripcion,
+                r.foto_url,
+                r.latitud,
+                r.longitud,
+                r.created_at,
+                u.username AS reportado_por, 
+                u.email AS correo_contacto 
+            FROM reportes r
+            INNER JOIN usuarios u ON r.usuario_id = u.id
+            ORDER BY r.created_at DESC;
+        `;
+
+        const result = await pool.query(query);
+        res.json(result.rows);
+    } catch (error) {
+        console.error('❌ Error al obtener la lista de animales:', error);
+        res.status(500).json({ error: 'Error interno del servidor al cargar los animales' });
     }
 });
