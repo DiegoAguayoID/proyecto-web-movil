@@ -16,6 +16,14 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization', 'authorization'] // Permite explícitamente el token
 }));
 
+app.options('*', (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'https://proyecto-web-movil-tawny.vercel.app');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type', 'Authorization', 'authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    return res.sendStatus(200); // Le dice al navegador: "¡Todo OK, envía el reporte!"
+});
+
 app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ limit: '100mb', extended: true }));
 
