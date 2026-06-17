@@ -59,25 +59,30 @@ const Home: React.FC = () => {
 
                     <IonButtons slot="end">
 
-                        <IonButton
-                            routerLink="/login"
-                            fill="outline"
-                            color="success"
-                            shape="round"
-                            className="ion-margin-end"
-                        >
-                            <IonIcon slot="start" icon={personOutline} />
-                            Iniciar Sesión
-                        </IonButton>
-
-                        <IonButton
-                            routerLink="/register"
-                            color="success"
-                            shape="round"
-                        >
-                            Registrarse
-                        </IonButton>
-
+                        {localStorage.getItem("token") ? (
+                            <IonButton
+                                onClick={() => {
+                                    localStorage.removeItem("token");
+                                    window.location.reload();
+                                }}
+                                fill="outline"
+                                color="danger" // Cambiamos a rojo para indicar cierre de sesión
+                                shape="round"
+                                className="ion-margin-end"
+                            >
+                                Cerrar Sesión
+                            </IonButton>
+                        ) : (
+                            <>
+                                <IonButton routerLink="/login" fill="outline" color="success" shape="round" className="ion-margin-end">
+                                    <IonIcon slot="start" icon={personOutline} />
+                                    Iniciar Sesión
+                                </IonButton>
+                                <IonButton routerLink="/register" color="success" shape="round">
+                                    Registrarse
+                                </IonButton>
+                            </>
+                        )}
                     </IonButtons>
 
                 </IonToolbar>
@@ -151,7 +156,7 @@ const Home: React.FC = () => {
                             </IonButton>
 
                             <IonButton
-                                routerLink="/adopciones"
+                                routerLink="/adopciones" // Asegúrate de que esta ruta coincida con tu configuración en App.tsx
                                 fill="solid"
                                 color="light"
                                 shape="round"
