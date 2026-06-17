@@ -61,7 +61,14 @@ const verificarToken = (req, res, next) => {
         req.usuario = decoded;
         next();
     } catch (err) {
-        return res.status(401).json({ status: "error", message: "Token inválido o expirado" });
+        // 🚨 ESTE LOG NOS VA A DECIR LA VERDAD EN EL PANEL DE RENDER:
+        console.error("❌ ERROR REAL DE JWT EN PRODUCCIÓN:", err.message);
+        
+        return res.status(403).json({ 
+            status: "error", 
+            message: "Token inválido o expirado",
+            detalle_servidor: err.message // Lo mandamos al frontend para verlo rápido
+        });
     }
 };
 
