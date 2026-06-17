@@ -37,10 +37,23 @@ pool.query('SELECT NOW()', (err, res) => {
 
 // verificar si es un token válido
 const verificarToken = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1];
+    // 1. Buscamos el header tolerando mayúsculas y minúsculas
+    const authHeader = req.headers['authorization'] || req.headers['Authorization'];
 
-    if (!token) {
-        return res.status(403).json({ status: "error", message: "No se proporcionó un token de acceso" });
+    if (!authHeader) {
+        return res.status(403).json({ status: "error", message: "No se proporcionó la cabecera Authorization" });
+    }
+
+    // 2. Extraemos el token de forma ultra segura soportando formatos con o sin 'Bearer'
+    let token = authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : authHeader;
+
+    // 3. Limpiamos comillas fantasmas que Vercel/Navegadores a veces inyectan
+    if (token) {
+        token = token.replace(/"/g, '').trim();
+    }
+
+    if (!token || token === 'null' || token === 'undefined') {
+        return res.status(403).json({ status: "error", message: "Token de acceso vacío o inválido string" });
     }
 
     try {
