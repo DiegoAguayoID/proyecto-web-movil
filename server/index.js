@@ -7,7 +7,10 @@ const jwt = require('jsonwebtoken');
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:8100',
+    origin: [
+        'http://localhost:8100',
+        'https://proyecto-web-movil-tawny.vercel.app'
+    ],
     credentials: true
 }));
 
