@@ -8,6 +8,7 @@ const app = express();
 
 app.use(cors({
     origin: [
+        'http://localhost',
         'http://localhost:8100', 
         'https://proyecto-web-movil-tawny.vercel.app'
     ],

@@ -58,7 +58,7 @@ const Register: React.FC = () => {
         }
 
         try {
-            const API_URL = 'https://proyecto-web-movil.onrender.com'; // URL de la nube
+            const API_URL = 'http://localhost:3000'; // URL de la nube
             const response = await fetch(`${API_URL}/register`, { // o /register, o /reportar
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

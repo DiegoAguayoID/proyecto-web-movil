@@ -7,7 +7,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DB_URL=tu_url_de_render  # Tu conexión a la BD en la nube
+      - DB_URL=postgres://usuario:contraseña@dpg-d8idugq8qa3s73ebk09g-a.oregon-postgres.render.com/huellas_seguras  # Tu conexión a la BD en la nube
     networks:
       - app-network
 

@@ -167,6 +167,7 @@ const Home: React.FC = () => {
                             </IonButton>
 
                             <IonButton
+                                routerLink="/about"
                                 fill="outline"
                                 color="light"
                                 shape="round"
