@@ -128,7 +128,10 @@ app.get('/', (req, res) => {
     res.send('🚀 El servidor de mi proyecto está vivo y funcionando');
 });
 
-app.listen(3000, '0.0.0.0', () => console.log("✅ Servidor escuchando y expuesto para Docker"));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+});
 
 // get para obtener usuarios
 app.get('/api/users', verificarToken, async (req, res) => {

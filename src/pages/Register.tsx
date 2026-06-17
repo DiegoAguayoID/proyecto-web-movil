@@ -58,10 +58,11 @@ const Register: React.FC = () => {
         }
 
         try {
-            const response = await fetch('https://proyecto-web-movil.onrender.com/register', {
+            const API_URL = 'https://proyecto-web-movil.onrender.com'; // URL de la nube
+            const response = await fetch(`${API_URL}/register`, { // o /register, o /reportar
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ username, rut, email, region, comuna, password })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, rut, email, region, comuna, password})
             });
 
             if (response.ok) {
