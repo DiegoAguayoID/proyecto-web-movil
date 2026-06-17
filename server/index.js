@@ -6,19 +6,17 @@ const jwt = require('jsonwebtoken');
 
 const app = express();
 
-// ✅ CONFIGURACIÓN DE CORS PROFESIONAL Y LIMPIA
 app.use(cors({
     origin: [
         'http://localhost:8100', 
         'https://proyecto-web-movil-tawny.vercel.app'
     ],
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'authorization']
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Permite peticiones de control
+    allowedHeaders: ['Content-Type', 'Authorization', 'authorization'] // Permite explícitamente el token
 }));
 
-// Habilitar de forma segura que responda a peticiones OPTIONS usando el mismo paquete cors
-app.options('*', cors());
+
 
 app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ limit: '100mb', extended: true }));

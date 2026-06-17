@@ -9,6 +9,7 @@ import {
     sendOutline, informationCircleOutline
 } from 'ionicons/icons';
 import React, { useState, useEffect } from 'react';
+import {useHistory} from 'react-router-dom';
 
 // Plugins de Capacitor
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
@@ -65,6 +66,7 @@ const MapHandler = ({ location, setLocation, setLocationText }: any) => {
 
 
 const ReportarAnimal: React.FC = () => {
+    const history = useHistory();
     const [photoUrl, setPhotoUrl] = useState<string | undefined>(undefined);
     // Ubicación por defecto al abrir la app (Ej: Centro de Valparaíso o Santiago)
     const [location, setLocation] = useState<{lat: number, lng: number} | null>(null);
@@ -78,10 +80,11 @@ const ReportarAnimal: React.FC = () => {
     const tomarFoto = async () => {
         try {
             const image = await Camera.getPhoto({
-                quality: 80,
+                quality: 40,
                 allowEditing: false,
                 resultType: CameraResultType.DataUrl,
-                source: CameraSource.Prompt 
+                source: CameraSource.Prompt,
+                width: 800 
             });
             setPhotoUrl(image.dataUrl);
         } catch (error) {
@@ -163,16 +166,18 @@ const enviarReporte = async () => {
         return;
     }
 
-    // 2. URL de tu backend en la nube
+    //Prueba en la nube
     const API_URL = 'https://proyecto-web-movil.onrender.com';
+    //Prueba local
+    //const API_URL = 'http://localhost:3000';
 
     try {
         const response = await fetch(`${API_URL}/reportar`, { // Asegúrate que esta ruta coincida con tu backend
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
-                // Si tu backend requiere login, descomenta la siguiente línea:
-                // 'Authorization': `Bearer ${localStorage.getItem('token')}` 
+                'Authorization': `Bearer ${localStorage.getItem('token')?.replace(/"/g, '')}`,
+                'authorization': `Bearer ${localStorage.getItem('token')?.replace(/"/g, '')}`
             },
             body: JSON.stringify({
                 tipo,
@@ -184,14 +189,23 @@ const enviarReporte = async () => {
         });
 
         if (response.ok) {
-            presentToast({ message: '¡Reporte subido con éxito!', duration: 3000, color: 'success' });
-            // Aquí podrías limpiar los campos después de subirlo
+            presentToast({ message: '¡Reporte subido con éxito!', duration: 2000, color: 'success' });
+            setTipo('');
+            setEstado('');
+            setDescripcion('');
+            setPhotoUrl('');
+            setLocation(null); // O como inicialices tu mapa
+
+            history.push('/reporte-exitoso');
         } else {
-            throw new Error('Error al enviar el reporte');
+            // Esto nos va a decir si el backend respondió 400, 401, 403, 500, etc.
+            const errorData = await response.json().catch(() => ({}));
+            const mensajeServidor = errorData.error || errorData.message || 'Error desconocido';
+            throw new Error(`Código ${response.status}: ${mensajeServidor}`);
         }
-    } catch (error) {
-        console.error("Error:", error);
-        presentToast({ message: 'No se pudo conectar al servidor. Inténtalo de nuevo.', duration: 3000, color: 'danger' });
+    } catch (error: any) {
+        console.error("Detalle del Error:", error);
+        presentToast({ message: error.message || 'Error de conexión', duration: 4000, color: 'danger' });
     }
 };
 

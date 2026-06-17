@@ -13,7 +13,9 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ReportarAnimal from './pages/ReportarAnimal';
-import ListaAnimales from './pages/ListaAnimales'; // Asegúrate de tener este archivo creado
+import ListaAnimales from './pages/ListaAnimales';
+import ReporteExitoso from './pages/ReporteExitoso';
+import QuienesSomos from './pages/QuienesSomos';
 
 /* CSS básico de Ionic */
 import '@ionic/react/css/core.css';
@@ -73,6 +75,9 @@ const App: React.FC = () => (
           <Route exact path="/register" component={Register} />
           <PrivateRoute exact path="/report" component={ReportarAnimal}/>
           <Route exact path="/adopciones" component={ListaAnimales} />
+          <Route path="/reporte-exitoso" component={ReporteExitoso} exact={true} />
+          <Route path="/about" component={QuienesSomos}/>
+          
           
           <Route exact path="/">
             <Redirect to="/home" />
@@ -80,11 +85,6 @@ const App: React.FC = () => (
           
           <Route exact path="/construccion">
               <Construccion />
-          </Route>
-          
-
-          <Route exact path="/about">
-            <div style={{ padding: '40px' }}>Próximamente</div>
           </Route>
 
           <Route exact path="/" render={() => <Redirect to="/home" />} />
