@@ -167,7 +167,7 @@ const enviarReporte = async () => {
     }
 
     //Prueba en la nube
-    const API_URL = 'https://proyecto-web-movil.onrender.com';
+    const API_URL = 'http://localhost:3000';
     //Prueba local
     //const API_URL = 'http://localhost:3000';
 
@@ -176,8 +176,7 @@ const enviarReporte = async () => {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')?.replace(/"/g, '')}`,
-                'authorization': `Bearer ${localStorage.getItem('token')?.replace(/"/g, '')}`
+                'Authorization': `Bearer ${localStorage.getItem('token')?.replace(/"/g, '')}`
             },
             body: JSON.stringify({
                 tipo,
