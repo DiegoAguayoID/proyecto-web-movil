@@ -77,6 +77,23 @@ const verificarToken = (req, res, next) => {
     }
 };
 
+const verificarTokenMiddleware = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    
+    if (!token) {
+        return res.status(401).json({ error: 'No autorizado. Falta el token de acceso.' });
+    }
+
+    jwt.verify(token, "MiPalabraSecretaSuperSecreta123*", (err, user) => {
+        if (err) {
+            return res.status(403).json({ error: 'Token inválido o vencido.' });
+        }
+        req.usuario = user; // Guarda el id y rol descifrados del token
+        next();
+    });
+};
+
 // Ruta para Registrar
 app.post('/register', async (req, res) => {
     const { username, rut, email, region, comuna, password } = req.body;
@@ -394,5 +411,78 @@ app.delete('/api/reportes/:id', verificarToken, async (req, res) => {
     } catch (err) {
         console.error("Error al eliminar reporte:", err.message);
         res.status(500).json({ status: "error", message: "Error al eliminar el reporte" });
+    }
+});
+
+app.get('/api/usuarios/perfil', verificarTokenMiddleware, async (req, res) => {
+    try {
+        const query = `
+            SELECT id, username, email, rut, comuna, region, rol 
+            FROM usuarios 
+            WHERE id = $1;
+        `;
+        const result = await pool.query(query, [req.usuario.id]);
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.error('❌ Error al obtener el perfil:', error);
+        res.status(500).json({ error: 'Error interno del servidor al obtener el perfil' });
+    }
+});
+
+app.put('/api/usuarios/actualizar', verificarTokenMiddleware, async (req, res) => {
+    const { username, comuna, region } = req.body;
+    try {
+        const query = `
+            UPDATE usuarios 
+            SET username = $1, comuna = $2, region = $3 
+            WHERE id = $4;
+        `;
+        await pool.query(query, [username, comuna, region, req.usuario.id]);
+        res.json({ message: 'Perfil actualizado exitosamente' });
+    } catch (error) {
+        console.error('❌ Error al actualizar el perfil:', error);
+        res.status(500).json({ error: 'Error interno del servidor al actualizar datos' });
+    }
+});
+
+app.get('/api/usuarios', verificarTokenMiddleware, async (req, res) => {
+    try {
+        if (req.usuario.rol !== 'admin') {
+            return res.status(403).json({ error: 'Acceso denegado. Se requieren permisos de administrador.' });
+        }
+        
+        const query = `
+            SELECT id, username, email, comuna, region, rol 
+            FROM usuarios 
+            ORDER BY id ASC;
+        `;
+        const result = await pool.query(query);
+        res.json(result.rows);
+    } catch (error) {
+        console.error('❌ Error al listar usuarios:', error);
+        res.status(500).json({ error: 'Error interno del servidor al listar usuarios' });
+    }
+});
+
+app.delete('/api/usuarios/:id', verificarTokenMiddleware, async (req, res) => {
+    try {
+        if (req.usuario.rol !== 'admin') {
+            return res.status(403).json({ error: 'Acceso denegado. No tienes permisos para eliminar.' });
+        }
+        
+        const idAEliminar = req.params.id;
+        const query = `
+            DELETE FROM usuarios 
+            WHERE id = $1;
+        `;
+        await pool.query(query, [idAEliminar]);
+        res.json({ message: 'Usuario eliminado correctamente del sistema' });
+    } catch (error) {
+        console.error('❌ Error al eliminar usuario:', error);
+        res.status(500).json({ error: 'Error interno del servidor al eliminar usuario' });
     }
 });

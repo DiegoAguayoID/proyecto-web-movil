@@ -106,7 +106,10 @@ const Rescates: React.FC = () => {
             `Atentamente,\nComunidad Huellas Seguras.`
         );
 
-        window.location.href = `mailto:${emailDestino}?subject=${asunto}&body=${cuerpo}`;
+        const link = document.createElement('a');
+        link.href = `mailto:${emailDestino}?subject=${asunto}&body=${cuerpo}`;
+        link.target = '_blank'; // Evita que se congele la pestaña actual
+        link.click(); // Simula el clic
     };
 
     return (
