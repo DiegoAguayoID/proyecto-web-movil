@@ -203,6 +203,7 @@ app.put('/api/users/:id', async (req, res) => {
 
 // delete para eliminar un usuario del sistema
 app.delete('/api/users/:id', async (req, res) => {
+    
     const {id} = req.params;
 
     try {
@@ -290,5 +291,32 @@ app.get('/animales', async (req, res) => {
     } catch (error) {
         console.error('❌ Error al obtener la lista de animales:', error);
         res.status(500).json({ error: 'Error interno del servidor al cargar los animales' });
+    }
+});
+// --- PASO 1: AÑADIR ESTA RUTA DE BORRADO ---
+
+app.delete('/api/reportes/:id', verificarToken, async (req, res) => {
+    // 1. Verificamos que el usuario logueado sea admin
+    // Usamos 'req.usuario.rol' porque así lo definimos al crear el token en el login
+    if (req.usuario.rol !== 'admin') {
+        return res.status(403).json({ 
+            status: "error", 
+            message: "Acceso denegado: Se requieren permisos de Administrador." 
+        });
+    }
+
+    try {
+        const { id } = req.params;
+        // 2. Ejecutamos el borrado en la base de datos
+        const result = await pool.query('DELETE FROM reportes WHERE id = $1 RETURNING id', [id]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ status: "error", message: "Reporte no encontrado" });
+        }
+
+        res.status(200).json({ status: "success", message: "Reporte eliminado correctamente" });
+    } catch (err) {
+        console.error("Error al eliminar reporte:", err.message);
+        res.status(500).json({ status: "error", message: "Error al eliminar el reporte" });
     }
 });

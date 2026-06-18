@@ -13,6 +13,10 @@ const ListaAnimales: React.FC = () => {
     const [filtroTipo, setFiltroTipo] = useState('todos');
     const [filtroUbicacion, setFiltroUbicacion] = useState('todos');
 
+    // Añade esto después de tus estados iniciales
+    const usuarioLogueado = JSON.parse(localStorage.getItem('user') || '{}');
+    const esAdmin = usuarioLogueado.rol === 'admin';
+
     const API_URL = 'https://proyecto-web-movil.onrender.com'; // Tu url local de desarrollo
 
     // 2. Fetch a la API para cargar datos reales de la BD
@@ -124,6 +128,30 @@ const ListaAnimales: React.FC = () => {
                                                 <IonIcon slot="start" icon={mailOutline} />
                                                 Contactar por Correo
                                             </IonButton>
+                                            {/* BOTÓN PARA ADMINS */}
+                                            {esAdmin && (
+                                                <IonButton 
+                                                    expand="block" 
+                                                    color="danger" 
+                                                    style={{ marginTop: '10px' }}
+                                                    onClick={async () => {
+                                                        const token = localStorage.getItem('token')?.replace(/"/g, '');
+                                                        const response = await fetch(`https://proyecto-web-movil.onrender.com/api/reportes/${animal.id}`, {
+                                                            method: 'DELETE',
+                                                            headers: { 'Authorization': `Bearer ${token}` }
+                                                        });
+                                                        
+                                                        if (response.ok) {
+                                                            window.location.reload(); // Recarga para ver el cambio
+                                                        } else {
+                                                            const errorData = await response.json();
+                                                            alert("Error al eliminar: " + (errorData.message || "Error desconocido"));
+                                                        }
+                                                    }}
+                                                >
+                                                    Eliminar Reporte
+                                                </IonButton>
+                                            )}
                                         </IonCardContent>
                                     </IonCard>
                                 </IonCol>
