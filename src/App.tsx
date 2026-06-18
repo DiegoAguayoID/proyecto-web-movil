@@ -16,6 +16,7 @@ import ReportarAnimal from './pages/ReportarAnimal';
 import ListaAnimales from './pages/ListaAnimales';
 import ReporteExitoso from './pages/ReporteExitoso';
 import QuienesSomos from './pages/QuienesSomos';
+import DetalleAnimal from './pages/DetalleAnimal';
 
 /* CSS básico de Ionic */
 import '@ionic/react/css/core.css';
@@ -77,7 +78,7 @@ const App: React.FC = () => (
           <Route exact path="/adopciones" component={ListaAnimales} />
           <Route path="/reporte-exitoso" component={ReporteExitoso} exact={true} />
           <Route path="/about" component={QuienesSomos}/>
-          
+          <Route exact path="/detalle/:id" component={DetalleAnimal} />
           
           <Route exact path="/">
             <Redirect to="/home" />

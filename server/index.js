@@ -171,7 +171,15 @@ app.get('/api/users', verificarToken, async (req, res) => {
         res.status(500).json({ status: "error", message: "Error en el servidor" });
     }
 });
-
+app.get('/animales/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await pool.query('SELECT * FROM reportes WHERE id = $1', [id]);
+        res.json(result.rows[0]);
+    } catch (err) {
+        res.status(500).send("Error");
+    }
+});
 // put para modificar perfil 
 app.put('/api/users/:id', async (req, res) => {
     const {id} = req.params;

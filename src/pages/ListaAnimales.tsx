@@ -95,7 +95,7 @@ const ListaAnimales: React.FC = () => {
                         ) : (
                             animalesFiltrados.map((animal: any) => (
                                 <IonCol key={animal.id} size="12" sizeMd="4">
-                                    <IonCard>
+                                    <IonCard routerLink={`/detalle/${animal.id}`}>
                                         {/* Renderizado directo de la foto almacenada en TEXT de Render */}
                                         <img 
                                             src={animal.foto_url} 
