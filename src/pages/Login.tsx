@@ -20,7 +20,11 @@ const Login: React.FC = () => {
         }
 
         try {
-            const API_URL = 'http://localhost:3000';
+            // Detecta automáticamente si estás en tu computadora o en internet
+            const API_URL = window.location.hostname === 'localhost'
+                ? 'http://localhost:3000'                      // Si estás en Docker local
+                : 'https://proyecto-web-movil.onrender.com';   // Si estás en Vercel (producción)
+            //const API_URL = 'http://localhost:3000';
             //window.location.hostname === '192.168.1.3' 
               //  ? 'http://192.168.1.3:3000' 
                 //: 'https://TU-BACKEND-EN-RENDER.onrender.com';

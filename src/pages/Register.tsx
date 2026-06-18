@@ -58,7 +58,11 @@ const Register: React.FC = () => {
         }
 
         try {
-            const API_URL = 'http://localhost:3000'; // URL de la nube
+            // Detecta automáticamente si estás en tu computadora o en internet
+            const API_URL = window.location.hostname === 'localhost'
+                ? 'http://localhost:3000'                      // Si estás en Docker local
+                : 'https://proyecto-web-movil.onrender.com';   // Si estás en Vercel (producción)
+            //const API_URL = 'http://localhost:3000'; // URL de la nube
             const response = await fetch(`${API_URL}/register`, { // o /register, o /reportar
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
