@@ -18,11 +18,9 @@ import ReporteExitoso from './pages/ReporteExitoso';
 import QuienesSomos from './pages/QuienesSomos';
 import DetalleAnimal from './pages/DetalleAnimal';
 import Rescates from './pages/Rescates';
-<<<<<<< Updated upstream
 import Mapa from './pages/Mapa';
-=======
 import Perfil from './pages/Perfil';
->>>>>>> Stashed changes
+import MisReportes from './pages/MisReportes';
 
 /* CSS básico de Ionic */
 import '@ionic/react/css/core.css';
@@ -87,11 +85,9 @@ const App: React.FC = () => (
           <Route path="/about" component={QuienesSomos}/>
           <Route exact path="/detalle/:id" component={DetalleAnimal} />
           <Route exact path="/rescates" component={Rescates} />
-<<<<<<< Updated upstream
           <Route exact path="/mapa" component={Mapa} />
-=======
           <Route exact path="/perfil" component={Perfil} />
->>>>>>> Stashed changes
+          <Route exact path="/mis-reportes" component={MisReportes} />
           
           
           <Route exact path="/">

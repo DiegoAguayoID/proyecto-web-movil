@@ -486,3 +486,21 @@ app.delete('/api/usuarios/:id', verificarTokenMiddleware, async (req, res) => {
         res.status(500).json({ error: 'Error interno del servidor al eliminar usuario' });
     }
 });
+
+app.get('/mis-reportes', verificarToken, async (req, res) => {
+    // req.usuario fue inyectado por el middleware verificarToken
+    const usuarioId = req.usuario.id; 
+
+    try {
+        // Reemplaza 'id_usuario' por el nombre exacto de la columna en tu tabla 'reportes'
+        const resultado = await pool.query(
+            'SELECT id, tipo, estado, descripcion, photo_url, create_at FROM reportes WHERE id_usuario = $1 ORDER BY create_at DESC',
+            [usuarioId]
+        );
+
+        res.json({ status: "success", data: resultado.rows });
+    } catch (error) {
+        console.error("Error al obtener mis reportes:", error.message);
+        res.status(500).json({ status: "error", message: "Error interno del servidor" });
+    }
+});
