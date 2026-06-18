@@ -180,6 +180,26 @@ app.get('/animales/:id', async (req, res) => {
         res.status(500).send("Error");
     }
 });
+app.get('/animales/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        // Hacemos el JOIN para traer el nombre del usuario (reportado_por)
+        const query = `
+            SELECT r.*, u.username AS reportado_por 
+            FROM reportes r
+            INNER JOIN usuarios u ON r.usuario_id = u.id
+            WHERE r.id = $1
+        `;
+        const result = await pool.query(query, [id]);
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: "No encontrado" });
+        }
+        res.json(result.rows[0]);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 // put para modificar perfil 
 app.put('/api/users/:id', async (req, res) => {
     const {id} = req.params;
