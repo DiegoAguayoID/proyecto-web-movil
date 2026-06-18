@@ -25,11 +25,11 @@ const MisReportes: React.FC = () => {
     const obtenerReportes = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`${API_URL}/mis-reportes`, {
+        const response = await fetch(`${API_URL}/api/reportes/mis-reportes`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'authorization': `Bearer ${token ? token.replace(/"/g, '') : ''}`
+            'authorization': `Bearer ${localStorage.getItem('token')?.replace(/"/g, '')}`
           }
         });
 
