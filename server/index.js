@@ -321,6 +321,54 @@ app.get('/animales', async (req, res) => {
         res.status(500).json({ error: 'Error interno del servidor al cargar los animales' });
     }
 });
+
+// NUEVA RUTA: Obtener solo los reportes creados por el usuario autenticado
+app.get('/api/reportes/mis-reportes', async (req, res) => {
+    try {
+        // 1. Extraer el token de la cabecera Authorization
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1];
+
+        if (!token) {
+            return res.status(401).json({ error: 'No autorizado. Falta el token.' });
+        }
+
+        // 2. Verificar el token JWT usando tu palabra secreta
+        const jwt = require('jsonwebtoken');
+        jwt.verify(token, "MiPalabraSecretaSuperSecreta123*", async (err, usuarioDecodificado) => {
+            if (err) {
+                return res.status(403).json({ error: 'Token inválido o expirado.' });
+            }
+
+            // Obtenemos el id del usuario que viene dentro del token
+            const usuarioId = usuarioDecodificado.id; 
+
+            // 3. Consulta SQL usando TUS columnas reales filtrando por usuario_id
+            const query = `
+                SELECT 
+                    r.id,
+                    r.tipo_animal AS titulo, -- Usamos alias para que React lo entienda de inmediato
+                    r.descripcion,
+                    to_char(r.created_at, 'DD-MM-YYYY') AS fecha, -- Formateamos la fecha directamente
+                    r.latitud || ', ' || r.longitud AS ubicacion, -- Concatenamos coordenadas como ubicación
+                    r.estado,
+                    r.foto_url AS imagen -- Alias para tu columna real foto_url
+                FROM reportes r
+                WHERE r.usuario_id = $1
+                ORDER BY r.created_at DESC;
+            `;
+
+            const result = await pool.query(query, [usuarioId]);
+            
+            // 4. Devolvemos el arreglo de filas
+            res.json(result.rows);
+        });
+
+    } catch (error) {
+        console.error('❌ Error al obtener mis reportes:', error);
+        res.status(500).json({ error: 'Error interno del servidor al cargar tus reportes' });
+    }
+});
 // --- PASO 1: AÑADIR ESTA RUTA DE BORRADO ---
 
 app.delete('/api/reportes/:id', verificarToken, async (req, res) => {

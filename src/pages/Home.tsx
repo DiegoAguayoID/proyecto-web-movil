@@ -373,32 +373,38 @@ const Home: React.FC = () => {
                                 {
                                     icon: megaphoneOutline,
                                     title: 'Reportar animales',
-                                    text: 'Registra animales abandonados con foto y ubicación.'
+                                    text: 'Registra animales abandonados con foto y ubicación.',
+                                    path: '/report'
                                 },
                                 {
                                     icon: homeOutline,
                                     title: 'Sistema de adopción',
-                                    text: 'Encuentra animales disponibles para adopción.'
+                                    text: 'Encuentra animales disponibles para adopción.',
+                                    path: '/adopciones'
                                 },
                                 {
                                     icon: mapOutline,
                                     title: 'Mapa interactivo',
-                                    text: 'Visualiza zonas con mayor presencia de animales.'
+                                    text: 'Visualiza zonas con mayor presencia de animales.',
+                                    path:  '/mapa' //CAMBIAR RUTA MAPA
                                 },
                                 {
                                     icon: shieldCheckmarkOutline,
                                     title: 'Solicitar rescate',
-                                    text: 'Pide ayuda a organizaciones o municipios.'
+                                    text: 'Pide ayuda a organizaciones o municipios.',
+                                    path: '/rescates' //CAMBIAR RUTA rescates
                                 },
                                 {
                                     icon: checkmarkDoneOutline,
                                     title: 'Seguimiento de casos',
-                                    text: 'Revisa el estado de tus reportes.'
+                                    text: 'Revisa el estado de tus reportes.',
+                                    path: '/mis-reportes' //CAMBIAR MIS  REPORTES
                                 },
                                 {
                                     icon: personOutline,
                                     title: 'Perfil de usuario',
-                                    text: 'Gestiona reportes y adopciones.'
+                                    text: 'Gestiona reportes y adopciones.',
+                                    path: '/perfil' //CAMBIAR RUTA PERFIL
                                 }
                             ].map((item, index) => (
                                 <IonCol
@@ -409,7 +415,7 @@ const Home: React.FC = () => {
                                 >
 
                                     <IonCard
-                                        routerLink="/construccion" 
+                                        routerLink={item.path} 
                                         button={true}
                                         style={{
                                             borderRadius: '18px',
@@ -419,9 +425,7 @@ const Home: React.FC = () => {
                                         }}
                                     >
 
-                                        <IonCardContent
-                                            className="ion-text-center"
-                                        >
+                                        <IonCardContent className="ion-text-center">
 
                                             <div
                                                 style={{

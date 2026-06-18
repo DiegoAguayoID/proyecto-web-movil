@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { 
   IonApp, IonRouterOutlet, setupIonicReact, 
-  IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonIcon, IonLabel, IonMenuButton 
+  IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonIcon, IonLabel, 
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -16,7 +16,11 @@ import ReportarAnimal from './pages/ReportarAnimal';
 import ListaAnimales from './pages/ListaAnimales';
 import ReporteExitoso from './pages/ReporteExitoso';
 import QuienesSomos from './pages/QuienesSomos';
+<<<<<<< Updated upstream
 import DetalleAnimal from './pages/DetalleAnimal';
+=======
+import Rescates from './pages/Rescates';
+>>>>>>> Stashed changes
 
 /* CSS básico de Ionic */
 import '@ionic/react/css/core.css';
@@ -78,7 +82,12 @@ const App: React.FC = () => (
           <Route exact path="/adopciones" component={ListaAnimales} />
           <Route path="/reporte-exitoso" component={ReporteExitoso} exact={true} />
           <Route path="/about" component={QuienesSomos}/>
+<<<<<<< Updated upstream
           <Route exact path="/detalle/:id" component={DetalleAnimal} />
+=======
+          <Route exact path="/rescates" component={Rescates} />
+          
+>>>>>>> Stashed changes
           
           <Route exact path="/">
             <Redirect to="/home" />
